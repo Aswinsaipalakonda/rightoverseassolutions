@@ -1,14 +1,40 @@
+# Right Overseas Solutions - Robots.txt
+# https://rightoverseassolutions.com/
+
+# Allow all bots to crawl everything
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /*.json$
+
+# Sitemap location
+Sitemap: https://rightoverseassolutions.com/sitemap.xml
+
+# Google specific
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
+# Bing specific  
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
 
+# Social media bots
 User-agent: Twitterbot
 Allow: /
 
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
+User-agent: LinkedInBot
 Allow: /
+
+# Image bots
+User-agent: Googlebot-Image
+Allow: /images/
+Allow: /icons/
+
+# Cache headers hint
+# Host: rightoverseas.in

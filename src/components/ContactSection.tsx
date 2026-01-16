@@ -1,12 +1,15 @@
 import { useEffect, useState, useRef } from 'react';
-import { Send, Phone, Mail, MapPin } from 'lucide-react';
+import { Send, Phone, Mail, MapPin, CheckCircle, Loader2 } from 'lucide-react';
 
 const ContactSection = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
+    interest: 'Study Abroad',
     message: ''
   });
   const sectionRef = useRef<HTMLElement>(null);
@@ -28,48 +31,81 @@ const ContactSection = () => {
     return () => observer.disconnect();
   }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    const whatsappMessage =
-      `👋 *New Study Abroad Inquiry*\n` +
-      `\n` +
-      `🙍‍♂️ *Name:* ${formData.name}\n` +
-      `✉️ *Email:* ${formData.email}\n` +
-      `📞 *Phone:* ${formData.phone}\n` +
-      `🎓 *Interest:* I would like to know more about studying abroad.\n` +
-      `📝 *Message:* ${formData.message}`;
-    const whatsappUrl = `https://wa.me/917396620303?text=${encodeURIComponent(whatsappMessage)}`;
-    
-    window.open(whatsappUrl, '_blank');
-    
-    // Reset form
-    setFormData({ name: '', email: '', phone: '', message: '' });
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    // Google Sheets Web App URL - Replace with your deployed script URL
+    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxKV95mGTDMLrti3pbFEZHSnz3MiQk-ZKFKRIavmCAyRRWJC31CAN0yneO_eWHV49-W/exec';
+
+    try {
+      // Submit to Google Sheets
+      const response = await fetch(GOOGLE_SHEETS_URL, {
+        method: 'POST',
+        mode: 'no-cors', // Required for Google Apps Script
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          timestamp: new Date().toISOString()
+        }),
+      });
+
+      // Since no-cors mode doesn't return response, we assume success
+      setSubmitStatus('success');
+      
+      // Also send to WhatsApp for immediate notification
+      const whatsappMessage =
+        `👋 *New Inquiry from Website*\n` +
+        `\n` +
+        `🙍‍♂️ *Name:* ${formData.name}\n` +
+        `✉️ *Email:* ${formData.email}\n` +
+        `📞 *Phone:* ${formData.phone}\n` +
+        `🎓 *Interest:* ${formData.interest}\n` +
+        `📝 *Message:* ${formData.message}`;
+      const whatsappUrl = `https://wa.me/917396620303?text=${encodeURIComponent(whatsappMessage)}`;
+      
+      // Open WhatsApp in new tab
+      setTimeout(() => {
+        window.open(whatsappUrl, '_blank');
+      }, 1000);
+      
+      // Reset form
+      setFormData({ name: '', email: '', phone: '', interest: 'Study Abroad', message: '' });
+      
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <section ref={sectionRef} id="contact" className="section-padding">
-      <div className="container mx-auto">
+    <section ref={sectionRef} id="contact" className="section-padding relative overflow-hidden">
+      <div className="container mx-auto relative z-10">
         <div className="text-center mb-16">
           <h2 className={`text-4xl md:text-5xl font-bold text-foreground mb-6 transition-all duration-1000 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}>
-            Get in Touch <span className="text-primary">with Us</span>
+            Book <span className="text-secondary">THE RIGHT</span> consultation
           </h2>
           <p className={`text-xl text-muted-foreground max-w-3xl mx-auto transition-all duration-1000 delay-200 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}>
-            Ready to start your international education journey? Contact us today for 
-            personalized guidance and expert counseling.
+            Connect with our experts today. Fill out the form below or reach us directly.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          {/* Contact Information */}
           <div className={`transition-all duration-1000 delay-300 ${
             isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
           }`}>
@@ -103,28 +139,40 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-foreground">Office</h4>
-                  <p className="text-muted-foreground"> Visakhapatnam, Andhra Pradesh, India</p>
+                  <p className="text-muted-foreground">Visakhapatnam, Andhra Pradesh, India</p>
                 </div>
               </div>
             </div>
 
-            <div className="mt-12 p-6 bg-gradient-gold rounded-2xl text-primary-foreground">
-              <h4 className="text-xl font-bold mb-4">Why Choose Right Overseas Solutions?</h4>
-              <ul className="space-y-2 text-sm">
-                <li>✓ Expert guidance from certified counselors</li>
-                <li>✓ 100% visa success rate</li>
-                <li>✓ Scholarship assistance</li>
-                <li>✓ End-to-end support</li>
-                <li>✓ Post-arrival assistance</li>
-              </ul>
+            {/* Map or Image */}
+            <div className="mt-10 rounded-2xl overflow-hidden shadow-lg">
+              <img 
+                src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&h=400&fit=crop" 
+                alt="Team Discussion" 
+                className="w-full h-64 object-cover"
+              />
             </div>
           </div>
 
+          {/* Contact Form */}
           <div className={`transition-all duration-1000 delay-500 ${
             isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
           }`}>
             <form onSubmit={handleSubmit} className="bg-card rounded-2xl p-8 shadow-elegant">
-              <h3 className="text-2xl font-bold text-foreground mb-6">Want to Contact</h3>
+              <h3 className="text-2xl font-bold text-foreground mb-6">Quick Inquiry</h3>
+              
+              {submitStatus === 'success' && (
+                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                  <p className="text-green-700 font-medium">Thank you! We'll get back to you soon.</p>
+                </div>
+              )}
+
+              {submitStatus === 'error' && (
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                  <p className="text-red-700 font-medium">Something went wrong. Please try again or contact us directly.</p>
+                </div>
+              )}
               
               <div className="space-y-6">
                 <div>
@@ -174,6 +222,24 @@ const ContactSection = () => {
                     placeholder="Enter your phone number"
                   />
                 </div>
+
+                <div>
+                   <label htmlFor="interest" className="block text-sm font-medium text-foreground mb-2">
+                      I'm interested in *
+                   </label>
+                   <select 
+                     name="interest" 
+                     id="interest"
+                     value={formData.interest}
+                     onChange={handleInputChange}
+                     className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-300"
+                   >
+                     <option value="Study Abroad">Study Abroad</option>
+                     <option value="Work Abroad">Work Abroad</option>
+                     <option value="Travel / Visit">Travel / Visit</option>
+                     <option value="Other">Other</option>
+                   </select>
+                </div>
                 
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
@@ -192,10 +258,20 @@ const ContactSection = () => {
                 
                 <button
                   type="submit"
-                  className="w-full bg-primary text-primary-foreground py-4 rounded-lg font-semibold text-lg hover:bg-primary-glow transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2 shadow-gold"
+                  disabled={isSubmitting}
+                  className="w-full bg-primary text-primary-foreground py-4 rounded-lg font-semibold text-lg hover:bg-primary-glow transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2 shadow-gold disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
-                  <Send className="w-5 h-5" />
-                  <span>Send </span>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      <span>Sending...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-5 h-5" />
+                      <span>Send Request</span>
+                    </>
+                  )}
                 </button>
               </div>
             </form>

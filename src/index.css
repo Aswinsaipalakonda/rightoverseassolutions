@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,6 +7,12 @@
 /* Right Overseas Solutions Design System 
 Gold & Black Professional Theme - All colors MUST be HSL.
 */
+
+/* Global overflow fix for mobile */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
 
 @layer base {
   :root {
@@ -64,6 +72,17 @@ Gold & Black Professional Theme - All colors MUST be HSL.
     --sidebar-border: 220 13% 91%;
 
     --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  /* Apply Inter font globally */
+  * {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   .dark {
@@ -161,5 +180,213 @@ Gold & Black Professional Theme - All colors MUST be HSL.
   .whatsapp-float {
     @apply fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full 
            shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-50;
+  }
+}
+
+/* Hero Section Advanced Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
+  25% { transform: translateY(-20px) translateX(10px); opacity: 0.6; }
+  50% { transform: translateY(-40px) translateX(-10px); opacity: 0.8; }
+  75% { transform: translateY(-20px) translateX(10px); opacity: 0.6; }
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+.animate-float {
+  animation: float linear infinite;
+}
+
+.animate-gradient {
+  animation: gradient 3s ease infinite;
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.bg-300\% {
+  background-size: 300% 300%;
+}
+
+/* Infinite Scroll Animations for Destinations Gallery */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scroll-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-scroll-left {
+  animation: scroll-left 30s linear infinite;
+}
+
+.animate-scroll-right {
+  animation: scroll-right 30s linear infinite;
+}
+
+.animate-scroll-left:hover,
+.animate-scroll-right:hover {
+  animation-play-state: paused;
+}
+
+/* Circular Testimonials Styles */
+.testimonial-container {
+  width: 100%;
+  max-width: 56rem;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .testimonial-container {
+    padding: 2rem;
+  }
+}
+
+.testimonial-grid {
+  display: grid;
+  gap: 3rem;
+}
+
+@media (min-width: 768px) {
+  .testimonial-grid {
+    gap: 5rem;
+  }
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 16rem;
+  perspective: 1000px;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .image-container {
+    height: 24rem;
+  }
+}
+
+.testimonial-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.testimonial-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.testimonial-content .name {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+  font-size: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .testimonial-content .name {
+    font-size: 1.75rem;
+  }
+}
+
+.testimonial-content .designation {
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 768px) {
+  .testimonial-content .designation {
+    margin-bottom: 2rem;
+    font-size: 1.125rem;
+  }
+}
+
+.testimonial-content .quote {
+  line-height: 1.75;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 768px) {
+  .testimonial-content .quote {
+    font-size: 1.125rem;
+  }
+}
+
+.arrow-buttons {
+  display: flex;
+  gap: 1rem;
+  padding-top: 2rem;
+}
+
+@media (min-width: 768px) {
+  .arrow-buttons {
+    gap: 1.5rem;
+    padding-top: 3rem;
+  }
+}
+
+.arrow-button {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border: none;
+}
+
+@media (min-width: 768px) {
+  .arrow-button {
+    width: 2.7rem;
+    height: 2.7rem;
+  }
+  
+  .testimonial-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .arrow-buttons {
+    padding-top: 0;
   }
 }

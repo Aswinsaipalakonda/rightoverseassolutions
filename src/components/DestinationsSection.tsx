@@ -1,41 +1,33 @@
 import { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 
-const destinations = [
-  {
-    country: 'United States',
-  image: '/images/USA.png', // Place your image in public/assets/USA.webp
-    landmark: 'Statue of Liberty',
-    description: 'World-class universities and diverse opportunities'
-  },
-  {
-    country: 'United Kingdom',
-    image: '/images/UK.png',
-    landmark: 'Big Ben',
-    description: 'Rich academic heritage and global recognition'
-  },
-  {
-    country: 'Canada',
-    image: '/images/Canada.png',
-    landmark: 'CN Tower',
-    description: 'High quality education and post-study work options'
-  },
-  {
-    country: 'Australia',
-    image: '/images/Australia.png',
-    landmark: 'Sydney Opera House',
-    description: 'Innovation-focused programs and beautiful lifestyle'
-  },
-  {
-    country: 'Germany',
-    image: '/images/Germany.png',
-    landmark: 'Brandenburg Gate',
-    description: 'Engineering excellence and affordable education'
-  }
+// First row destinations - scrolls left (Primary countries)
+const destinationsRow1 = [
+  { name: 'United Kingdom', image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&h=300&fit=crop' },
+  { name: 'Australia', image: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=400&h=300&fit=crop' },
+  { name: 'New Zealand', image: 'https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=400&h=300&fit=crop' },
+  { name: 'United States', image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=400&h=300&fit=crop' },
+  { name: 'Canada', image: 'https://images.unsplash.com/photo-1517090504586-fde19ea6066f?w=400&h=300&fit=crop' },
+  { name: 'Germany', image: 'https://images.unsplash.com/photo-1560969184-10fe8719e047?w=400&h=300&fit=crop' },
+  { name: 'Ireland', image: 'https://images.unsplash.com/photo-1549918864-48ac978761a4?w=400&h=300&fit=crop' },
+];
+
+// Second row destinations - scrolls right (Cities)
+const destinationsRow2 = [
+  { name: 'United Kingdom', image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&h=300&fit=crop' },
+  { name: 'Australia', image: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=400&h=300&fit=crop' },
+  { name: 'New Zealand', image: 'https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=400&h=300&fit=crop' },
+  { name: 'United States', image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=400&h=300&fit=crop' },
+  { name: 'Canada', image: 'https://images.unsplash.com/photo-1517090504586-fde19ea6066f?w=400&h=300&fit=crop' },
+  { name: 'Germany', image: 'https://images.unsplash.com/photo-1560969184-10fe8719e047?w=400&h=300&fit=crop' },
+  { name: 'Ireland', image: 'https://images.unsplash.com/photo-1549918864-48ac978761a4?w=400&h=300&fit=crop' },
 ];
 
 const DestinationsSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -44,7 +36,7 @@ const DestinationsSection = () => {
           setIsVisible(true);
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     );
 
     if (sectionRef.current) {
@@ -54,62 +46,98 @@ const DestinationsSection = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Duplicate arrays for seamless infinite scroll
+  const row1Items = [...destinationsRow1, ...destinationsRow1];
+  const row2Items = [...destinationsRow2, ...destinationsRow2];
+
   return (
-    <section ref={sectionRef} id="destinations" className="section-padding">
-      <div className="container mx-auto">
-        <div className="text-center mb-16">
-          <h2 className={`text-4xl md:text-5xl font-bold text-foreground mb-6 transition-all duration-1000 ${
+    <section ref={sectionRef} id="destinations" className="py-16 md:py-24 bg-gray-50 overflow-hidden">
+      <div className="container mx-auto px-4 mb-12">
+        <div className="text-center">
+          <h2 className={`text-3xl md:text-5xl font-bold text-gray-900 mb-4 transition-all duration-1000 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}>
-            Study <span className="text-primary">Destinations</span>
+            Explore <span className="text-primary">Global Destinations</span>
           </h2>
-          <p className={`text-xl text-muted-foreground max-w-3xl mx-auto transition-all duration-1000 delay-200 ${
+          <p className={`text-lg md:text-xl text-gray-600 max-w-3xl mx-auto transition-all duration-1000 delay-200 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}>
-            Explore world-renowned destinations that offer exceptional educational opportunities 
-            and life-changing experiences for international students.
+            Discover world-renowned cities and universities that await your journey
           </p>
         </div>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {destinations.map((destination, index) => (
+      {/* First Row - Scrolls Left */}
+      <div className="relative mb-6 overflow-hidden">
+        <div className="flex animate-scroll-left">
+          {row1Items.map((dest, index) => (
             <div
-              key={destination.country}
-              className={`country-card transition-all duration-1000 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              }`}
-              style={{ transitionDelay: `${index * 150}ms` }}
+              key={`row1-${index}`}
+              className="flex-shrink-0 mx-2 md:mx-3 group cursor-pointer"
             >
-              <div className="text-center">
-                <div className="mb-4 flex justify-center">
-                  <img
-                    src={destination.image}
-                    alt={destination.country + ' image'}
-                    className="w-full h-40 md:h-56 object-cover rounded-2xl shadow-md bg-white border border-border"
-                    style={{ maxWidth: '100%', aspectRatio: '16/9' }}
-                  />
-                </div>
-                
-                <h3 className="text-2xl font-bold text-foreground mb-2">
-                  {destination.country}
-                </h3>
-                
-                <div className="text-primary font-semibold mb-4">
-                  {destination.landmark}
-                </div>
-                
-                <p className="text-muted-foreground leading-relaxed">
-                  {destination.description}
-                </p>
-              </div>
-              
-              <div className="mt-6 pt-6 border-t border-border">
-                <button className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-semibold hover:bg-primary-glow transition-colors duration-300">
-                  Learn More
-                </button>
+              <div className="relative w-36 h-28 md:w-52 md:h-40 rounded-2xl overflow-hidden shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                <img
+                  src={dest.image}
+                  alt={dest.name}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                <span className="absolute bottom-3 left-3 text-white font-semibold text-sm md:text-base">
+                  {dest.name}
+                </span>
               </div>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Second Row - Scrolls Right */}
+      <div className="relative mb-12 overflow-hidden">
+        <div className="flex animate-scroll-right">
+          {row2Items.map((dest, index) => (
+            <div
+              key={`row2-${index}`}
+              className="flex-shrink-0 mx-2 md:mx-3 group cursor-pointer"
+            >
+              <div className="relative w-36 h-28 md:w-52 md:h-40 rounded-2xl overflow-hidden shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                <img
+                  src={dest.image}
+                  alt={dest.name}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                <span className="absolute bottom-3 left-3 text-white font-semibold text-sm md:text-base">
+                  {dest.name}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* CTA Section */}
+      <div className="container mx-auto px-4">
+        <div className="bg-gradient-to-r from-primary via-amber-400 to-primary rounded-3xl p-8 md:p-12 text-center shadow-2xl">
+          <h3 className="text-2xl md:text-3xl font-bold text-black mb-3">Ready to Explore Your Dream Destination?</h3>
+          <p className="text-black/80 mb-6 text-base md:text-lg max-w-2xl mx-auto">Connect with our expert counselors to find the perfect country and university for your study abroad journey.</p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button
+              onClick={() => { navigate('/contact'); window.scrollTo(0, 0); }}
+              className="w-full sm:w-auto group inline-flex items-center justify-center gap-2 px-8 py-4 bg-black text-white font-bold rounded-full hover:bg-gray-900 transition-all duration-300 hover:scale-105 shadow-xl"
+            >
+              <span>Book FREE Consultation</span>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+            <button
+              onClick={() => { navigate('/services'); window.scrollTo(0, 0); }}
+              className="w-full sm:w-auto group inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-gray-50 transition-all duration-300 hover:scale-105 shadow-xl"
+            >
+              <span>Explore Our Services</span>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
         </div>
       </div>
     </section>
