@@ -10,7 +10,7 @@ const Contact = () => {
        <SEO title="Contact Us" description="Book Your Free Consultation with Right Overseas Solutions." />
       <Navigation />
       
-      <div className="bg-primary py-24 text-center">
+      <div className="bg-primary pt-32 pb-24 md:pt-40 text-center">
          <div className="container mx-auto px-4">
             <h1 className="text-4xl md:text-6xl font-bold text-black mb-4">Let's Talk</h1>
             <p className="text-xl text-black/70">Start your journey today.</p>

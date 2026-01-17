@@ -10,7 +10,7 @@ const SuccessStories = () => {
        <SEO title="Success Stories" description="Read inspiring success stories from students and professionals we have helped settle abroad." />
       <Navigation />
       
-      <div className="bg-gray-900 py-24 text-center text-white relative">
+      <div className="bg-gray-900 pt-32 pb-24 md:pt-40 text-center text-white relative">
          <div className="container mx-auto px-4 relative z-10">
             <h1 className="text-4xl md:text-6xl font-bold mb-4">Success Stories</h1>
             <p className="text-xl text-gray-400">Real people. Real dreams achieved.</p>

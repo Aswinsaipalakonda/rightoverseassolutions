@@ -10,7 +10,7 @@ const Destinations = () => {
        <SEO title="Destinations" description="Explore study and work opportunities in USA, UK, Canada, Australia, New Zealand, Germany, and Ireland." />
       <Navigation />
       
-      <div className="bg-gray-900 py-24 text-center text-white relative">
+      <div className="bg-gray-900 pt-32 pb-24 md:pt-40 text-center text-white relative">
          <div className="container mx-auto px-4 relative z-10">
             <h1 className="text-4xl md:text-6xl font-bold mb-4">Choose Your Destination</h1>
             <p className="text-xl text-gray-400">Where do you want to go?</p>

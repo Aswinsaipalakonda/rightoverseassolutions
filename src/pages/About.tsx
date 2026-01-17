@@ -87,7 +87,7 @@ const About = () => {
       <Navigation />
       
       {/* Hero Header */}
-      <div className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-20 md:py-32 overflow-hidden">
+      <div className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1920&h=600&fit=crop')] bg-cover bg-center opacity-20" />
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent" />
         
@@ -185,8 +185,8 @@ const About = () => {
           </div>
         </section>
 
-        {/* Why Choose Us */}
-        <section className="bg-gray-50 py-16 md:py-24 mb-16 md:mb-24">
+        {/* Why Choose Us - Redesigned */}
+        <section className="py-16 md:py-24 mb-16 md:mb-24">
           <div className="container mx-auto px-4">
             <div className="text-center mb-10 md:mb-16">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-4 text-primary font-semibold text-sm">
@@ -199,26 +199,31 @@ const About = () => {
                 We're not just consultants – we're your partners in achieving your international dreams
               </p>
             </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {whyChooseUs.map((item, index) => (
                 <div 
                   key={index} 
-                  className="group bg-white rounded-2xl hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-primary/30 overflow-hidden"
+                  className="group relative bg-white rounded-xl overflow-hidden hover:shadow-2xl transition-all duration-300"
                 >
-                  <div className="relative h-40 overflow-hidden">
+                  {/* Image Background */}
+                  <div className="relative h-56 overflow-hidden">
                     <img 
                       src={item.image} 
                       alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                    <div className="absolute bottom-3 left-3 w-10 h-10 md:w-12 md:h-12 bg-primary rounded-xl flex items-center justify-center">
-                      <item.icon className="w-5 h-5 md:w-6 md:h-6 text-black" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/80"></div>
+                    
+                    {/* Icon */}
+                    <div className="absolute top-4 left-4 w-12 h-12 bg-primary rounded-lg flex items-center justify-center shadow-lg">
+                      <item.icon className="w-6 h-6 text-black" />
                     </div>
                   </div>
-                  <div className="p-6 md:p-8">
-                    <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-3">{item.title}</h3>
-                    <p className="text-gray-600 text-sm md:text-base leading-relaxed">{item.desc}</p>
+                  
+                  {/* Content Overlay */}
+                  <div className="absolute inset-0 flex flex-col justify-end p-6">
+                    <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+                    <p className="text-gray-200 text-sm leading-relaxed">{item.desc}</p>
                   </div>
                 </div>
               ))}
