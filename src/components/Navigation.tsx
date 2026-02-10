@@ -32,11 +32,11 @@ const Navigation = () => {
       }`}>
          <div className="container mx-auto px-4 lg:px-16 flex justify-between items-center text-sm font-medium">
             <div className="flex items-center space-x-6">
-               <span className="flex items-center gap-2"><Phone size={14} /> +91 7396620303</span>
+               <span className="flex items-center gap-2"><Phone size={14} /> +91 7396620303 </span>
                <span className="flex items-center gap-2"><Globe size={14} /> www.rightoverseassolutions.com</span>
             </div>
             <div className="flex items-center space-x-4">
-               <span>Visakhapatnam, India</span>
+               <span>Visakhapatnam | Vijayawada | Narsapet</span>
             </div>
          </div>
       </div>

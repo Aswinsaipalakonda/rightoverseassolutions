@@ -9,8 +9,7 @@ const ContactSection = () => {
     name: '',
     email: '',
     phone: '',
-    interest: 'Study Abroad',
-    message: ''
+    interest: 'Study Abroad'
   });
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -42,7 +41,7 @@ const ContactSection = () => {
     setSubmitStatus('idle');
 
     // Google Sheets Web App URL - Replace with your deployed script URL
-    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxKV95mGTDMLrti3pbFEZHSnz3MiQk-ZKFKRIavmCAyRRWJC31CAN0yneO_eWHV49-W/exec';
+    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwGlEtdSySsdYQNYSZsWGJd5W8wQpm0lOw7EXX9QIdzu0Bx25j1lGxO0C8EGClCTTyR/exec';
 
     try {
       // Submit to Google Sheets
@@ -54,31 +53,16 @@ const ContactSection = () => {
         },
         body: JSON.stringify({
           ...formData,
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
+          source: 'contact'
         }),
       });
 
       // Since no-cors mode doesn't return response, we assume success
       setSubmitStatus('success');
       
-      // Also send to WhatsApp for immediate notification
-      const whatsappMessage =
-        `👋 *New Inquiry from Website*\n` +
-        `\n` +
-        `🙍‍♂️ *Name:* ${formData.name}\n` +
-        `✉️ *Email:* ${formData.email}\n` +
-        `📞 *Phone:* ${formData.phone}\n` +
-        `🎓 *Interest:* ${formData.interest}\n` +
-        `📝 *Message:* ${formData.message}`;
-      const whatsappUrl = `https://wa.me/917396620303?text=${encodeURIComponent(whatsappMessage)}`;
-      
-      // Open WhatsApp in new tab
-      setTimeout(() => {
-        window.open(whatsappUrl, '_blank');
-      }, 1000);
-      
       // Reset form
-      setFormData({ name: '', email: '', phone: '', interest: 'Study Abroad', message: '' });
+      setFormData({ name: '', email: '', phone: '', interest: 'Study Abroad' });
       
     } catch (error) {
       console.error('Form submission error:', error);
@@ -89,67 +73,70 @@ const ContactSection = () => {
   };
 
   return (
-    <section ref={sectionRef} id="contact" className="section-padding relative overflow-hidden">
+    <section ref={sectionRef} id="contact" className="px-3 py-8 sm:px-4 sm:py-10 md:section-padding relative overflow-hidden">
       <div className="container mx-auto relative z-10">
-        <div className="text-center mb-16">
-          <h2 className={`text-4xl md:text-5xl font-bold text-foreground mb-6 transition-all duration-1000 ${
+        <div className="text-center mb-8 md:mb-16">
+          <h2 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3 md:mb-6 transition-all duration-1000 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}>
             Book <span className="text-secondary">THE RIGHT</span> consultation
           </h2>
-          <p className={`text-xl text-muted-foreground max-w-3xl mx-auto transition-all duration-1000 delay-200 ${
+          <p className={`text-sm sm:text-base md:text-xl text-muted-foreground max-w-3xl mx-auto transition-all duration-1000 delay-200 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}>
             Connect with our experts today. Fill out the form below or reach us directly.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
           {/* Contact Information */}
           <div className={`transition-all duration-1000 delay-300 ${
             isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
           }`}>
-            <h3 className="text-2xl font-bold text-foreground mb-8">Contact Information</h3>
+            <h3 className="text-xl md:text-2xl font-bold text-foreground mb-5 md:mb-8">Contact Information</h3>
             
-            <div className="space-y-6">
-              <div className="flex items-center space-x-4">
-                <div className="p-3 bg-primary rounded-lg">
-                  <Phone className="w-6 h-6 text-primary-foreground" />
+            <div className="space-y-4 md:space-y-6">
+              <div className="flex items-start sm:items-center space-x-3 sm:space-x-4">
+                <div className="p-2.5 md:p-3 bg-primary rounded-lg shrink-0">
+                  <Phone className="w-5 h-5 md:w-6 md:h-6 text-primary-foreground" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-foreground">Phone</h4>
-                  <p className="text-muted-foreground">+91 7396620303</p>
-                  <p className="text-muted-foreground">+91 9059231695</p>
+                  <h4 className="font-semibold text-foreground text-sm md:text-base">Phone</h4>
+                  <p className="text-muted-foreground text-xs md:text-sm">+91 7396620303 </p>
+                  <p className="text-muted-foreground text-xs md:text-sm">+91 9059232695</p>
+                  <p className="text-muted-foreground text-xs md:text-sm">+91 9866204413</p>
                 </div>
               </div>
               
-              <div className="flex items-center space-x-4">
-                <div className="p-3 bg-primary rounded-lg">
-                  <Mail className="w-6 h-6 text-primary-foreground" />
+              <div className="flex items-start sm:items-center space-x-3 sm:space-x-4">
+                <div className="p-2.5 md:p-3 bg-primary rounded-lg shrink-0">
+                  <Mail className="w-5 h-5 md:w-6 md:h-6 text-primary-foreground" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-foreground">Email</h4>
-                  <p className="text-muted-foreground">info.rightoverseassolutions@gmail.com</p>
+                  <h4 className="font-semibold text-foreground text-sm md:text-base">Email</h4>
+                  <p className="text-muted-foreground text-xs md:text-sm break-all">info.rightoverseassolutions@gmail.com</p>
                 </div>
               </div>
               
-              <div className="flex items-center space-x-4">
-                <div className="p-3 bg-primary rounded-lg">
-                  <MapPin className="w-6 h-6 text-primary-foreground" />
+              <div className="flex items-start sm:items-center space-x-3 sm:space-x-4">
+                <div className="p-2.5 md:p-3 bg-primary rounded-lg shrink-0">
+                  <MapPin className="w-5 h-5 md:w-6 md:h-6 text-primary-foreground" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-foreground">Office</h4>
-                  <p className="text-muted-foreground">Visakhapatnam, Andhra Pradesh, India</p>
+                  <h4 className="font-semibold text-foreground text-sm md:text-base">Our Offices</h4>
+                  <p className="text-muted-foreground text-xs md:text-sm">Visakhapatnam, AP (Main Branch)</p>
+                  <p className="text-muted-foreground text-xs md:text-sm">Vijayawada, AP</p>
+                  <p className="text-muted-foreground text-xs md:text-sm">Narsapet, AP</p>
                 </div>
               </div>
             </div>
 
             {/* Map or Image */}
-            <div className="mt-10 rounded-2xl overflow-hidden shadow-lg">
+            <div className="mt-6 md:mt-10 rounded-xl md:rounded-2xl overflow-hidden shadow-lg">
               <img 
                 src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&h=400&fit=crop" 
                 alt="Team Discussion" 
-                className="w-full h-64 object-cover"
+                className="w-full h-40 md:h-64 object-cover"
               />
             </div>
           </div>
@@ -158,8 +145,8 @@ const ContactSection = () => {
           <div className={`transition-all duration-1000 delay-500 ${
             isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
           }`}>
-            <form onSubmit={handleSubmit} className="bg-card rounded-2xl p-8 shadow-elegant">
-              <h3 className="text-2xl font-bold text-foreground mb-6">Quick Inquiry</h3>
+            <form onSubmit={handleSubmit} className="bg-card rounded-xl md:rounded-2xl p-5 sm:p-6 md:p-8 shadow-elegant">
+              <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4 md:mb-6">Quick Inquiry</h3>
               
               {submitStatus === 'success' && (
                 <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3">
@@ -174,9 +161,9 @@ const ContactSection = () => {
                 </div>
               )}
               
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
+                  <label htmlFor="name" className="block text-xs md:text-sm font-medium text-foreground mb-1.5 md:mb-2">
                     Full Name *
                   </label>
                   <input
@@ -186,13 +173,13 @@ const ContactSection = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-300"
+                    className="w-full px-3 md:px-4 py-2.5 md:py-3 rounded-lg border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-300"
                     placeholder="Enter your full name"
                   />
                 </div>
                 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+                  <label htmlFor="email" className="block text-xs md:text-sm font-medium text-foreground mb-1.5 md:mb-2">
                     Email Address *
                   </label>
                   <input
@@ -202,13 +189,13 @@ const ContactSection = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-300"
+                    className="w-full px-3 md:px-4 py-2.5 md:py-3 rounded-lg border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-300"
                     placeholder="Enter your email address"
                   />
                 </div>
                 
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
+                  <label htmlFor="phone" className="block text-xs md:text-sm font-medium text-foreground mb-1.5 md:mb-2">
                     Phone Number *
                   </label>
                   <input
@@ -218,13 +205,13 @@ const ContactSection = () => {
                     value={formData.phone}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-300"
+                    className="w-full px-3 md:px-4 py-2.5 md:py-3 rounded-lg border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-300"
                     placeholder="Enter your phone number"
                   />
                 </div>
 
                 <div>
-                   <label htmlFor="interest" className="block text-sm font-medium text-foreground mb-2">
+                   <label htmlFor="interest" className="block text-xs md:text-sm font-medium text-foreground mb-1.5 md:mb-2">
                       I'm interested in *
                    </label>
                    <select 
@@ -232,34 +219,18 @@ const ContactSection = () => {
                      id="interest"
                      value={formData.interest}
                      onChange={handleInputChange}
-                     className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-300"
+                     className="w-full px-3 md:px-4 py-2.5 md:py-3 rounded-lg border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-300"
                    >
                      <option value="Study Abroad">Study Abroad</option>
                      <option value="Work Abroad">Work Abroad</option>
                      <option value="Travel / Visit">Travel / Visit</option>
-                     <option value="Other">Other</option>
                    </select>
-                </div>
-                
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    rows={4}
-                    className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-300 resize-none"
-                    placeholder="Tell us about your study abroad goals..."
-                  />
                 </div>
                 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-primary text-primary-foreground py-4 rounded-lg font-semibold text-lg hover:bg-primary-glow transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2 shadow-gold disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="w-full bg-primary text-primary-foreground py-3 md:py-4 rounded-lg font-semibold text-base md:text-lg hover:bg-primary-glow transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2 shadow-gold disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
                   {isSubmitting ? (
                     <>

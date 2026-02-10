@@ -4,24 +4,24 @@ import { ArrowRight } from 'lucide-react';
 
 // First row destinations - scrolls left (Primary countries)
 const destinationsRow1 = [
-  { name: 'United Kingdom', image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&h=300&fit=crop' },
-  { name: 'Australia', image: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=400&h=300&fit=crop' },
-  { name: 'New Zealand', image: 'https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=400&h=300&fit=crop' },
-  { name: 'United States', image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=400&h=300&fit=crop' },
-  { name: 'Canada', image: 'https://images.unsplash.com/photo-1517090504586-fde19ea6066f?w=400&h=300&fit=crop' },
-  { name: 'Germany', image: 'https://images.unsplash.com/photo-1560969184-10fe8719e047?w=400&h=300&fit=crop' },
-  { name: 'Ireland', image: 'https://images.unsplash.com/photo-1549918864-48ac978761a4?w=400&h=300&fit=crop' },
+  { name: 'United Kingdom', flag: 'https://flagcdn.com/w40/gb.png', image: 'images/UK.png' },
+  { name: 'Australia', flag: 'https://flagcdn.com/w40/au.png', image: 'images/Australia.png' },
+  { name: 'United States', flag: 'https://flagcdn.com/w40/us.png', image: 'images/USA.png' },
+  { name: 'Canada', flag: 'https://flagcdn.com/w40/ca.png', image: 'images/Canada.png' },
+  { name: 'Germany', flag: 'https://flagcdn.com/w40/de.png', image: 'images/Germany.png' },
+  { name: 'Ireland', flag: 'https://flagcdn.com/w40/ie.png', image: 'images/Ireland.png' },
+  { name: 'New Zealand', flag: 'https://flagcdn.com/w40/nz.png', image: 'images/NewZealand.png' },
 ];
 
-// Second row destinations - scrolls right (Cities)
+// Second row destinations - scrolls right
 const destinationsRow2 = [
-  { name: 'United Kingdom', image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&h=300&fit=crop' },
-  { name: 'Australia', image: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=400&h=300&fit=crop' },
-  { name: 'New Zealand', image: 'https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=400&h=300&fit=crop' },
-  { name: 'United States', image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=400&h=300&fit=crop' },
-  { name: 'Canada', image: 'https://images.unsplash.com/photo-1517090504586-fde19ea6066f?w=400&h=300&fit=crop' },
-  { name: 'Germany', image: 'https://images.unsplash.com/photo-1560969184-10fe8719e047?w=400&h=300&fit=crop' },
-  { name: 'Ireland', image: 'https://images.unsplash.com/photo-1549918864-48ac978761a4?w=400&h=300&fit=crop' },
+  { name: 'Poland', flag: 'https://flagcdn.com/w40/pl.png', image: 'images/Poland.webp' },
+  { name: 'Norway', flag: 'https://flagcdn.com/w40/no.png', image: 'images/Norway.webp' },
+  { name: 'Czech Republic', flag: 'https://flagcdn.com/w40/cz.png', image: 'images/CzechRepublic.webp' },
+  { name: 'Netherlands', flag: 'https://flagcdn.com/w40/nl.png', image: 'images/Netherlands.webp' },
+  { name: 'United States', flag: 'https://flagcdn.com/w40/us.png', image: 'images/USA.png' },
+  { name: 'Canada', flag: 'https://flagcdn.com/w40/ca.png', image: 'images/Canada.png' },
+  { name: 'Germany', flag: 'https://flagcdn.com/w40/de.png', image: 'images/Germany.png' },
 ];
 
 const DestinationsSection = () => {
@@ -83,7 +83,8 @@ const DestinationsSection = () => {
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                <span className="absolute bottom-3 left-3 text-white font-semibold text-sm md:text-base">
+                <span className="absolute bottom-3 left-3 text-white font-semibold text-sm md:text-base flex items-center gap-1.5">
+                  <img src={dest.flag} alt="" className="w-5 h-3.5 object-cover rounded-sm shadow-sm" loading="lazy" />
                   {dest.name}
                 </span>
               </div>
@@ -108,7 +109,8 @@ const DestinationsSection = () => {
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                <span className="absolute bottom-3 left-3 text-white font-semibold text-sm md:text-base">
+                <span className="absolute bottom-3 left-3 text-white font-semibold text-sm md:text-base flex items-center gap-1.5">
+                  <img src={dest.flag} alt="" className="w-5 h-3.5 object-cover rounded-sm shadow-sm" loading="lazy" />
                   {dest.name}
                 </span>
               </div>

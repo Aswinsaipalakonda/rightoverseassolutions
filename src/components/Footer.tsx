@@ -82,17 +82,29 @@ const Footer = () => {
             <div className="space-y-4 text-secondary-foreground/80">
               <div className="flex items-start gap-3">
                  <MapPin className="w-5 h-5 mt-1 shrink-0 text-primary" />
-                 <p>Visakhapatnam, Andhra Pradesh, India</p>
+                 <p>Visakhapatnam, AP <span className="text-primary text-xs font-semibold">(Main Branch)</span></p>
               </div>
-              {/* Add more locations if applicable */}
+              <div className="flex items-start gap-3">
+                 <MapPin className="w-5 h-5 mt-1 shrink-0 text-primary" />
+                 <p>Vijayawada, AP</p>
+              </div>
+              <div className="flex items-start gap-3">
+                 <MapPin className="w-5 h-5 mt-1 shrink-0 text-primary" />
+                 <p>Narsapet, AP</p>
+              </div>
+            </div>
+            <h4 className="text-lg font-semibold mb-4 mt-6 text-primary">Contact</h4>
+            <div className="space-y-2 text-secondary-foreground/80 text-sm">
+              <p>+91 7396620303</p>
+              <p>+91 9059232695</p>
+              <p>+91 9866204413</p>
             </div>
           </div>
         </div>
         
         <div className="border-t border-secondary-foreground/20 mt-12 pt-8 text-center">
           <p className="text-secondary-foreground/60">
-            © 2026 Right Overseas Solutions. All rights reserved. | 
-            <span className="text-primary"> Empowering Dreams, Enabling Futures</span>
+            © 2026 Right Overseas Solutions. All rights reserved.
           </p>
         </div>
       </div>

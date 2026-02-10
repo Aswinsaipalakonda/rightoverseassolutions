@@ -5,6 +5,7 @@ import AboutSection from '@/components/AboutSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import Footer from '@/components/Footer';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
+import InquiryPopup from '@/components/InquiryPopup';
 import SEO from '@/components/SEO';
 
 const Home = () => {
@@ -12,6 +13,7 @@ const Home = () => {
     <div className="min-h-screen flex flex-col bg-white">
       <SEO title="Home" />
       <Navigation />
+      <InquiryPopup />
       <main className="flex-grow">
         <HeroSection />
         <CountryFlagsSection />
