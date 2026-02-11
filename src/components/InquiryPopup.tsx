@@ -17,7 +17,7 @@ const InquiryPopup = () => {
     // Show popup after a short delay every time the component mounts
     const timer = setTimeout(() => {
       setIsOpen(true);
-    }, 5000);
+    }, 4500);
     return () => {
       clearTimeout(timer);
       if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
