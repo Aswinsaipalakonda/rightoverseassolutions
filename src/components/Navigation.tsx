@@ -36,7 +36,7 @@ const Navigation = () => {
                <span className="flex items-center gap-2"><Globe size={14} /> www.rightoverseassolutions.com</span>
             </div>
             <div className="flex items-center space-x-4">
-               <span>Visakhapatnam | Vijayawada | Narsapet</span>
+               <span>Visakhapatnam | Vijayawada | Narasapuram</span>
             </div>
          </div>
       </div>

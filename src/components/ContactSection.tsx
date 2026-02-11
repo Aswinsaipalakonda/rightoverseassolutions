@@ -126,7 +126,7 @@ const ContactSection = () => {
                   <h4 className="font-semibold text-foreground text-sm md:text-base">Our Offices</h4>
                   <p className="text-muted-foreground text-xs md:text-sm">Visakhapatnam, AP (Main Branch)</p>
                   <p className="text-muted-foreground text-xs md:text-sm">Vijayawada, AP</p>
-                  <p className="text-muted-foreground text-xs md:text-sm">Narsapet, AP</p>
+                  <p className="text-muted-foreground text-xs md:text-sm">Narasapuram, AP</p>
                 </div>
               </div>
             </div>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { X, Send, Loader2, CheckCircle, GraduationCap } from 'lucide-react';
 
 const InquiryPopup = () => {
@@ -11,17 +11,25 @@ const InquiryPopup = () => {
     phone: '',
     interest: 'Study Abroad',
   });
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     // Show popup after a short delay every time the component mounts
     const timer = setTimeout(() => {
       setIsOpen(true);
     }, 2000);
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    };
   }, []);
 
   const handleClose = () => {
     setIsOpen(false);
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -37,6 +45,8 @@ const InquiryPopup = () => {
     const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwGlEtdSySsdYQNYSZsWGJd5W8wQpm0lOw7EXX9QIdzu0Bx25j1lGxO0C8EGClCTTyR/exec';
 
     try {
+      // Note: mode 'no-cors' yields an opaque response so we cannot inspect status.
+      // Success status reflects that the request was sent, not confirmed by the server.
       await fetch(GOOGLE_SHEETS_URL, {
         method: 'POST',
         mode: 'no-cors',
@@ -52,7 +62,7 @@ const InquiryPopup = () => {
 
       setFormData({ name: '', email: '', phone: '', interest: 'Study Abroad' });
 
-      setTimeout(() => {
+      closeTimerRef.current = setTimeout(() => {
         handleClose();
       }, 3000);
     } catch (error) {
